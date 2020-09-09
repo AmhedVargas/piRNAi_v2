@@ -58,11 +58,11 @@ shinyUI(
                         ##Chose cluster
                         
                         radioButtons("clustercon", label = HTML("Select piRNA cluster
-                                                     [<a href=\"\" onclick=\"$('#explain_cluster').toggle(); return false;\">info</a>]
+                                                     [<a href=\"\" onclick=\"$('#explain_cluster_adv').toggle(); return false;\">info</a>]
                                                      "),
                                      choices = list("21ur-1224 (6 sites)" = 1, "21ur-1692 (6 sites)" = 2, "21ur-8831 (7 sites)" = 3, "21ur-1610 (8 sites)" = 4), selected = 1, width='100%', inline= TRUE),
                         HTML("
-                     <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_cluster\">
+                     <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_cluster_adv\">
             We recommend to use the cluster 21ur-1224.
                                      </div></p>
                      "),
