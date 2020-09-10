@@ -89,40 +89,40 @@ shinyServer(function(input, output, session) {
         output$DesignControls <- renderUI({
             fluidRow(
                 
-                selectInput("isoform", label = HTML("<b>Targeted isoform
+                selectInput("isoform", label = HTML("<b>Isoform
                                                            [<a href=\"\" onclick=\"$('#explain_isoform').toggle(); return false;\">info</a>]
                                                            </b>"), 
                             unique(Genes[which(as.character(Genes[,4])==wbid),5])),
                 
                 HTML("
                      <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_isoform\">
-            Isoforms based on the WormBase 270 annotations</div></p>
+            WormBase 270 annotations</div></p>
                      "),
-                selectInput("selectMM", label = HTML("<b>Synthetic piRNA off-target sites
+                selectInput("selectMM", label = HTML("<b>piRNA specificity
                                                            [<a href=\"\" onclick=\"$('#explain_uniqueness').toggle(); return false;\">info</a>]
-                                                           <br>(minimum # of mismatches)</b>"), 
-                            choices = list(">= 5 mismatches to genome" = 1, ">= 4 mismatches to genome" = 2, ">= 3 mismatches to genome" = 3,
-                                           ">= 5 mismatches to exome" = 4, ">= 4 mismatches to exome" = 5, ">= 3 mismatches to exome" = 6),
+                                                           <br>(off-target homology)</b>"), 
+                            choices = list("at least five mismatches to genome" = 1, "at least four mismatches to genome" = 2, "at least three mismatches to genome" = 3,
+                                           "at least five mismatches to exome" = 4, "at least four mismatches to exome" = 5, "at least three mismatches to exome" = 6),
                             selected = 1),
                 HTML("
                      <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_uniqueness\">
-            Select the specificity of piRNAi fragments. Each piRNAi fragment was mapped across the C. elegans (or C. briggsae) genome and verified its uniqueness at least to n mismatches, i.e. even with n base pairs changed the sequence remains unique.
+            This option specifies the minimum number of mismatches to off-target sites in the genome or exome of <i>C. elegans</i> or <i>C. briggsae</i>.
                                                  </div></p>
                      "),
-                radioButtons("cluster", label = HTML("Select piRNA cluster
-                                                     [<a href=\"\" onclick=\"$('#explain_cluster').toggle(); return false;\">info</a>]
-                                                     "),
-                             choices = list("21ur-1224" = 1), selected = 1, width='100%'),
-                HTML("
-                     <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_cluster\">
-            For the moment, we use the cluster 21ur-1224 as a template to express 6 piRNAis fragments that are antisente to the transcript being targeted
-                                     </div></p>
-                     "),
-            checkboxInput("FlaControl", label = HTML("<b>Generate negative control
+            #     radioButtons("cluster", label = HTML("Select piRNA cluster
+            #                                          [<a href=\"\" onclick=\"$('#explain_cluster').toggle(); return false;\">info</a>]
+            #                                          "),
+            #                  choices = list("21ur-1224" = 1), selected = 1, width='100%'),
+            #     HTML("
+            #          <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_cluster\">
+            # For the moment, we use the cluster 21ur-1224 as a template to express 6 piRNAis fragments that are antisente to the transcript being targeted
+            #                          </div></p>
+            #          "),
+            checkboxInput("FlaControl", label = HTML("<b>Negative control
                                                                [<a href=\"\" onclick=\"$('#explain_control').toggle(); return false;\">info</a>]
                                                                </b>"), value = FALSE, width='100%'),
             HTML("<p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_control\">
-            Reverse complement sequences so they have the same orientation as the coding sequence
+            Target fragment with piRNAS in sense orientation (non-silencing).
                                      </div></p>"),
             actionButton("actionPI", label = "Generate piRNAi cluster")
             
@@ -750,18 +750,18 @@ shinyServer(function(input, output, session) {
             output$AdvDesignControls <- renderUI({
                 fluidRow(
                     
-                    column(width = 3,selectInput("AdvIsoform", label = HTML("<b>Targeted isoform
+                    column(width = 3,selectInput("AdvIsoform", label = HTML("<b>Isoform
                                                            [<a href=\"\" onclick=\"$('#explain_isoform_advanced').toggle(); return false;\">info</a>]
                                                            </b>"), 
                                 unique(Genes[which(as.character(Genes[,4])==wbid),5]))),
                     
-                    column(width = 3, selectInput("AdvSelectMM", label = HTML("<b>Synthetic piRNA off-target sites
-                    [<a href=\"\" onclick=\"$('#explain_uniqueness_advanced').toggle(); return false;\">info</a>]<br>(minimum # of mismatches)
+                    column(width = 3, selectInput("AdvSelectMM", label = HTML("<b>piRNA specificity
+                    [<a href=\"\" onclick=\"$('#explain_uniqueness_advanced').toggle(); return false;\">info</a>]<br>(off-target homology)
                                                            </b>"),
-                                                  choices = list(">= 5 mismatches to genome" = 1, ">= 4 mismatches to genome" = 2, ">= 3 mismatches to genome" = 3,
-                                                                 ">= 5 mismatches to exome" = 4, ">= 4 mismatches to exome" = 5, ">= 3 mismatches to exome" = 6),
+                                                  choices = list("at least five mismatches to genome" = 1, "at least four mismatches to genome" = 2, "at least three mismatches to genome" = 3,
+                                                                 "at least five mismatches to exome" = 4, "at least four mismatches to exome" = 5, "at least three mismatches to exome" = 6),
                                                                       selected = 1)),
-                    column(width = 3, sliderInput("Posslider", label = HTML("<b>Relative position in Genebody (%)
+                    column(width = 3, sliderInput("Posslider", label = HTML("<b>Relative position in cDNA (%)
                                                                             [<a href=\"\" onclick=\"$('#explain_Posgene').toggle(); return false;\">info</a>]
                                                                             </b>
                                                                             "),
@@ -771,16 +771,20 @@ shinyServer(function(input, output, session) {
                                                                             </b>
                                                                            ")
                                                   ,0, 100, c(30, 70), step = 5)),
-                    
+                    br(),
+                    br(),
+                    br(),
+                    br(),
+                    br(),
                     HTML("
                      <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_isoform_advanced\">
-            Isoforms based on the WormBase 270 annotations</div></p>
+            WormBase 270 annotations</div></p>
                      "),
 
                     HTML("
                      <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_uniqueness_advanced\">
-            Select the specificity of piRNAi fragments. Each piRNAi fragment was mapped across the C. elegans (or C. briggsae) genome and verified its uniqueness at least to n mismatches, i.e. even with n base pairs changed the sequence remains unique.
-                                                 </div></p>
+            This option specifies the minimum number of mismatches to off-target sites in the genome or exome of <i>C. elegans</i> or <i>C. briggsae</i>.
+                                                             </div></p>
                      "),
                     
                     HTML("

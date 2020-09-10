@@ -35,13 +35,13 @@ shinyUI(
             
             tabPanel("Designer",
                      mainPanel(
-                         h1("Design piRNAi fragments"),
-                         HTML("<h4>for <i>C. elegans</i> and <i>C. briggsae</i> <a href=\"https://wormbase.org/about/wormbase_release_WS270\">WS270</a>.</h4>"),
+                         h2("Design piRNAi fragments"),
+                         HTML("<h4>Target <i>C. elegans</i> and <i>C. briggsae</i> genes</h4>"),
                          tabsetPanel(
                             tabPanel("Simple",
                                      br(),
                          textAreaInput("geneinput", label = "Target gene", value = "", resize="none", placeholder= "WormbaseID, transcript or gene name", rows=1),
-                         actionButton("actiongenesearch", label = "Search gene"),
+                         actionButton("actiongenesearch", label = "Search"),
                          hr(),
                          uiOutput("DesignControls"),
                          hr(),
@@ -53,14 +53,14 @@ shinyUI(
                          uiOutput("downloadseq")
                          ),
                          tabPanel("Advanced",
-                         h3("Make your own construct:"),
+                         h3("Select individual synthetic piRNAs"),
                     fluidRow(
                         ##Chose cluster
                         
                         radioButtons("clustercon", label = HTML("Select piRNA cluster
                                                      [<a href=\"\" onclick=\"$('#explain_cluster_adv').toggle(); return false;\">info</a>]
                                                      "),
-                                     choices = list("21ur-1224 (6 sites)" = 1, "21ur-1692 (6 sites)" = 2, "21ur-8831 (7 sites)" = 3, "21ur-1610 (8 sites)" = 4), selected = 1, width='100%', inline= TRUE),
+                                     choices = list("21ur-1224 (six piRNAs)" = 1, "21ur-1692 (six piRNAs)" = 2, "21ur-8831 (seven piRNAs)" = 3, "21ur-1610 (eigth piRNAs)" = 4), selected = 1, width='100%', inline= TRUE),
                         HTML("
                      <p align=\"justify\"><div class=\"explain\" style=\"display: none\" id=\"explain_cluster_adv\">
             We recommend to use the cluster 21ur-1224.
@@ -140,8 +140,6 @@ shinyUI(
                      mainPanel(
                          h3("A database and cloning system for a genome-wide piRNA interference collection"),
                          HTML("<p align=\"justify\">
-                         In <i>C. elegans</i>, genome-wide tools based on RNA interference have been used to do “systems biology” screens. The collection was based on the observation that bacteria expressing a double-stranded RNA (dsRNA) can elicit an RNAi response in worms if they eat the bacteria (Timmons and Fire, 1998). This lead to the creation of a genome-wide collection of bacteria expressing dsRNA against most of <i>C. elegans</i> genes (Ahringer lab library). This has been used a lot in the field but has some limitations. In the germline, the phenotype from ingested dsRNA is considerably weaker than injected dsRNA.<br> 
-<br>
 Recently, our lab has developed methods to silence genes via piRNAs instead (Priyadarshini <i>et al., in preparation</i>). piRNAs are a class of small RNAs that are active in the germline. We only recently learned how the piRNAs actually recognize genes (Heng-Chi lab paper and Mello lab paper). 
 Knowing the rules, mean that we can design piRNAs to target specific genes and so, that is what we have done here.
 
@@ -158,8 +156,8 @@ This app helps to "),
                      mainPanel(
                          h3("Tracks"),
                          HTML("<p align=\"justify\">
-                         <a href=\"https://s3.eu-central-1.amazonaws.com/wormbuilder.dev/tracks/piRNAi/Celegans.tar.gz\"><i>C. elegans</i> piRNA sequences</a><br>
-                         <a href=\"https://s3.eu-central-1.amazonaws.com/wormbuilder.dev/tracks/piRNAi/Cbriggsae.tar.gz\"><i>C. briggsae</i> piRNA sequences</a><br>
+                         <a href=\"https://s3.eu-central-1.amazonaws.com/wormbuilder.dev/tracks/piRNAi/Celegans.tar.gz\"><i>C. elegans</i> unique synthetic piRNAs (20-mers)</a><br>
+                         <a href=\"https://s3.eu-central-1.amazonaws.com/wormbuilder.dev/tracks/piRNAi/Cbriggsae.tar.gz\"><i>C. briggsae</i> unique synthetic piRNAs (20-mers)</a><br>
                       </p>")
                      )
             ),
@@ -167,9 +165,9 @@ This app helps to "),
             tabPanel("About",
                      mainPanel(
                          h3("The app"),
-                         HTML("<p align=\"justify\">This website is generated via custom modified css/html code running in R via the shiny library.
+                         HTML("<p align=\"justify\">This website was generated via custom modified css/html code running in R via the shiny library.
                  <br>All the templates, libraries, and programs used to produce this site are under the MIT and GNU licenses.</p>"),
-                         h3("The piRNAi algorithm"),
+                         h3("The piRNA-based RNA interference app (\"piRNAi\")"),
                          HTML("<p align=\"justify\">
                       Deviced by Christian Frøkjær-Jensen, tested experimentally by Monika Priyadarshini and implemented computationally by <a href=\"https://www.researchgate.net/profile/Amhed_Vargas_Velazquez\">Amhed Missael Vargas Velazquez</a> </p>"),
                          h3("The Laboratory of Synthetic Genome Biology"),
@@ -184,7 +182,6 @@ This app helps to "),
             )
         ),
         hr(),
-        HTML("<a href=\"https://syngenbio.kaust.edu.sa/\">Syntetic genome biology laboratory @KAUST</a><br>"),
         HTML("<a href=\"http://www.wormbuilder.org/\">Wormbuilder</a><br>"),
         HTML("<a href=\"mailto:cfjensen@kaust.edu.sa\">Contact us!</a>")
         
