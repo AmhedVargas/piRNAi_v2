@@ -164,12 +164,11 @@ This app helps to "),
             ###About
             tabPanel("About",
                      mainPanel(
-                         h3("The app"),
-                         HTML("<p align=\"justify\">This website was generated via custom modified css/html code running in R via the shiny library.
-                 <br>All the templates, libraries, and programs used to produce this site are under the MIT and GNU licenses.</p>"),
                          h3("The piRNA-based RNA interference app (\"piRNAi\")"),
                          HTML("<p align=\"justify\">
-                      Deviced by Christian Frøkjær-Jensen, tested experimentally by Monika Priyadarshini and implemented computationally by <a href=\"https://www.researchgate.net/profile/Amhed_Vargas_Velazquez\">Amhed Missael Vargas Velazquez</a> </p>"),
+                      This website was generated via custom modified css/html code running in R via the shiny library.
+                 <br>All the templates, libraries, and programs used to produce this site are under the MIT and GNU licenses.
+                    <br>While the rationale behind the app is described in the background section, its implementation can be found at <a href=\"https://www.researchgate.net/profile/Amhed_Vargas_Velazquez\">Amhed Missael Vargas Velazquez's</a> <a href=\"https://github.com/AmhedVargas\">Github account</a></p>"),
                          h3("The Laboratory of Synthetic Genome Biology"),
                          HTML("<p align=\"justify\">
                  The Laboratory of Synthetic Genome Biology is located in building 2 - level 3 (Ibn Al-Haytham – Above Spine) at King Abdullah University of Science and Technology (KAUST).
