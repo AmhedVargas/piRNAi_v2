@@ -1,5 +1,5 @@
 # piRNAi app
-Shiny app that aids the design of synthetic fragments required for piRNA interference. See the [piRNA-DB repository](https://github.com/AmhedVargas/piRNAi-DB) for more information regarding the creation of target sequences.
+Shiny app that aids the design of synthetic fragments required for piRNA interference. See the app in action [here](https://wormbuilder.dev/piRNAi/). Also, see the [piRNA-DB repository](https://github.com/AmhedVargas/piRNAi-DB) for more information regarding the creation of target sequences.
 
 ## General description
 Piwi-interacting RNAs, or simply piRNAs, are a class of small RNAs (21 nucleotides long) that are active in the *C. elegans* germline and act in the regulation of gene expression. One of the mechanisms by which they can perfom this control is by targeting cytosolic mRNA transcripts by means Watson-Crick pairing. Knowing the rules of pairing allows to design synthetic piRNAs that can potentially silence any gene endogenous or exogenous to *C.elegans*. Indeed this reasoning is the basis for a novel method of germline-specific gene regulation in *C. elegans* denominated piRNA interfence (piRNAi).
@@ -26,10 +26,16 @@ While the program has been succesfully tested in R 3.6.1 (2019-07-05, and later 
 *   install.packages("Biostrings")
 
 ## Deployment and implementation
-Make sure you have installed R along with all its dependences. Follow by cloning this repository:
+You can see the app in action by going to [here](https://wormbuilder.dev/piRNAi/).
+
+To run the app locally, make sure you have installed R along with all its dependences. Follow by cloning this repository:
+
 `git clone https://github.com/AmhedVargas/piRNAi_v2`
+
 Run the program via command line specifying an open port, e.g., 5100, and open a web browser to access the app.
+
 `R -e "shiny::runApp('piRNAi_v2',host="0.0.0.0",port=5100)"`
+
 Alternatively, you can run the app in a graphical environment such as Rstudio.
 
 ## Usage
@@ -43,15 +49,15 @@ Download here the coordinates of piRNAi targeting sequences for *C. elegans* and
 ## Some characteristics to consider on the selection of piRNAi target sequences
 By design, piRNAi sequences target gene isoforms at no preferential location, i.e. 5’ or 3’ ends of the transcript.
 
-[alt text](https://github.com/AmhedVargas/piRNAi_v2/tree/master/img/SF1.jpg?raw=true)
+![alt text](https://github.com/AmhedVargas/piRNAi_v2/tree/master/img/SF1.jpg?raw=true)
 
 Similarly, the GC content of most of the piRNAi target sequences are optimal for synthesis.  
 
-[alt text](https://github.com/AmhedVargas/piRNAi_v2/tree/master/img/SF2.jpg?raw=true)
+![alt text](https://github.com/AmhedVargas/piRNAi_v2/tree/master/img/SF2.jpg?raw=true)
 
 Finally, assuming a simple set of rules (at least 6 piRNAi targets separated by at least 5 bp), the total number of gene isoforms that could be effectively targeted by piRNAi sequences is above 90% for most of the tracks.
 
-[alt text](https://github.com/AmhedVargas/piRNAi_v2/tree/master/img/SF3_combined.jpg?raw=true)
+![alt text](https://github.com/AmhedVargas/piRNAi_v2/tree/master/img/SF3_combined.jpg?raw=true)
 
 ## Construction of piRNAi text-based database from piRNAi-DB tracks
 In the "src" folder you can find the scripts required to produce the "DataBase" directory. However, please note that it requires as input the results produced by the [piRNA-DB repository](https://github.com/AmhedVargas/piRNAi-DB).
