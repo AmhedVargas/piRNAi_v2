@@ -53,7 +53,7 @@ By design, piRNAi sequences target gene isoforms at no preferential location, i.
 
 Similarly, the GC content of most of the piRNAi target sequences are optimal for synthesis.  
 
-![piRNAI GC content](https://github.com/AmhedVargas/piRNAi_v2/tree/master/img/SF2.jpg?raw=true)
+![piRNAi GC content](https://github.com/AmhedVargas/piRNAi_v2/tree/master/img/SF2.jpg?raw=true)
 
 Finally, assuming a simple set of rules (at least 6 piRNAi targets separated by at least 5 bp), the total number of gene isoforms that could be effectively targeted by piRNAi sequences is above 90% for most of the tracks.
 
