@@ -809,7 +809,14 @@ shinyServer(function(input, output, session) {
     ###Observe function for adding fragments based on piRNA table
     ##############################################################
     
-    observeEvent(input$AdvIsoform,{
+    observeEvent(
+        {
+        #Track any change to parameters
+        input$AdvIsoform
+        input$Gcslider
+        input$Posslider
+        input$AdvSelectMM}
+        ,{
         ##Now design table; NOt sure if it will work as table should be most of the time be out of observe functions
         ADVisoform = input$AdvIsoform
         
@@ -840,32 +847,36 @@ shinyServer(function(input, output, session) {
             if(sum(idx) > 0){tab=tab[-which(idx),]}
         }
         
+        ##Partial patch to solve for when nopiRNA exist within the input ranges
+        datatab = tab
+        matches=as.integer(input$AdvSelectMM)
+        mm=c(5,4,3,5,4,3)[matches]
+        minGC=input$Gcslider[1]
+        maxGC=input$Gcslider[2]
+        minPos=input$Posslider[1]/100
+        maxPos=input$Posslider[2]/100
+        if(matches>3){
+            datatab[,3]=datatab[,4]
+        }
         
+        datatab = datatab[which(datatab[,3]>=mm),]
+        
+        datatab = datatab[which((datatab[,5]>=minGC)&(datatab[,5]<=maxGC)),]
+        
+        relpos=datatab[,1]
+        if(strand =="-"){relpos= relpos+18}
+        relpos=c(relpos+2-genest)/(geneend-genest+1)
+        if(strand =="-"){relpos= 1 - as.numeric(relpos)}
+        
+        datatab = datatab[which((relpos>=minPos)&(relpos<=maxPos)),]
+        
+        
+        if( (nrow(datatab) == 0) | (ncol(datatab) == 0) ){
+            output$AllPiTab <- DT::renderDataTable({ data.frame(Error=c("There is no piRNAi target sites with the given parameters")) })
+            }else{   
         #output$AllPiTab <- DT::renderDataTable(DT::datatable({
         output$AllPiTab <- DT::renderDataTable({
-            datatab = tab
-            matches=as.integer(input$AdvSelectMM)
-            mm=c(5,4,3,5,4,3)[matches]
-            minGC=input$Gcslider[1]
-            maxGC=input$Gcslider[2]
-            minPos=input$Posslider[1]/100
-            maxPos=input$Posslider[2]/100
-            if(matches>3){
-                datatab[,3]=datatab[,4]
-                }
-            
-            datatab = datatab[which(datatab[,3]>=mm),]
-            
-            datatab = datatab[which((datatab[,5]>=minGC)&(datatab[,5]<=maxGC)),]
-            
-            relpos=datatab[,1]
-            if(strand =="-"){relpos= relpos+18}
-            relpos=c(relpos+2-genest)/(geneend-genest+1)
-            if(strand =="-"){relpos= 1 - as.numeric(relpos)}
-            
-            datatab = datatab[which((relpos>=minPos)&(relpos<=maxPos)),]
-            
-            
+
             ##Table results
             Pitab=datatab
             
@@ -918,6 +929,7 @@ shinyServer(function(input, output, session) {
             Pdata
         #},server = FALSE, escape = FALSE, selection = 'none'))
         },server = FALSE, escape = FALSE, selection = 'none')
+    }
         }, ignoreInit = F)
     
     ##Handle shiny to add dynamic button
